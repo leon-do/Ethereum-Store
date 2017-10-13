@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+    <div class='box'>
+	    I have recieved the item. 
+	    <br>
+	    The contract address is:
+	    <br>
+	    <input id='contractAddress'></input>
+	    <br><br><hr><br>
+	    <button disabled onclick="recieve()" id='btn'>I recieved the item</button>
+    </div>
+
+    <div class='message'> 
+		Recieve:
+		<br><br>
+		Clicking the button will complete the transaction and release the funds from the contract.
+	</div>
+
+	<div class='popup'></div>
+
+</body>
+
+<script type="text/javascript" src='contract.js'></script>    
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript">
+
+    // creates a dynamic contract
+    var url = parseURL(window.location.href)
+    var contractAddress = url.searchObject.addr
+    if (contractAddress !== undefined){
+    	document.getElementById('contractAddress').value = contractAddress
+    }
+
+    function recieve() {
+
+    	contractAddress = document.getElementById('contractAddress').value
+
+        // get buyer address
+		web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
+
+	        // only the seller can confirm
+	        if (buyerAddress === web3.eth.accounts[0]){
+		        
+		        // release funds
+		        web3.eth.contract(contractAbi).at(contractAddress).confirmReceived(
+		            {
+		                from: web3.eth.accounts[0], 
+		                data: contractByteCode, 
+		                gas: '4700000',
+		            }, function(err, transactionAddress){
+		           	var message = `The transaction will now return your funds. <br> Check at: <br> https://rinkeby.etherscan.io/tx/${transactionAddress} <br><br> contact the seller to send the item`
+		            document.getElementsByClassName('popup')[0].innerHTML = message
+		        })
+	        } else {
+        		alert('make sure the contract address is correct')
+	        }
+
+		}) 
+
+    }
+
+
+	window.addEventListener('load', function() {
+        // this function is in contract.js		
+		loadWeb3()
+	})
+
+</script>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <div class='box'>
+	    Transaction Number: 
+	    <br>
+	    <input id='cancelTransactionNumber'>
+        <br><br><hr><br>
+	    <button disabled onclick="cancelSell()" id='btn'>cancel item</button>
+    </div>
+
+    <div class='message'> 
+        Cancel:
+        <br><br>
+        Canceling a contract will disable it forever!
+    </div>
+
+    <div class='popup'></div>
+
+</body>
+
+<script type="text/javascript" src='contract.js'></script>    
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script type="text/javascript">
+
+
+	function cancelSell() {
+
+        var contractAddress = document.getElementById('cancelTransactionNumber').value
+
+        // get buyer address
+        web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
+        	
+        	// if the there is no buyer, then seller can cancel
+	        if (buyerAddress !== null || buyerAddress !== '0x0000000000000000000000000000000000000000'){
+	        	alert(`the contract cannot be canceled because a buyer has already purchased this item`)
+	        	return
+	        }
+
+	        // get seller address
+			web3.eth.contract(contractAbi).at(contractAddress).seller.call({}, function (err, sellerAddress){
+		        
+		        // only the seller can cancel
+		        if (sellerAddress === web3.eth.accounts[0]){
+			        web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
+		            	var message = 'your transaction has been canceled. you will be refunded shortly'
+		        		document.getElementsByClassName('popup')[0].innerHTML = message
+		        	})	
+		        } else {
+	        		alert('incorrect address')
+		        }
+			
+			})  
+
+		})
+
+    }
+
+	window.addEventListener('load', function() {
+        // this function is in contract.js		
+        loadWeb3()
+
+	})
+
+</script>
+
+</html>

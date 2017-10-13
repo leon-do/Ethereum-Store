@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <div class='box'>
+        I agree to buy the item
+        <span id='buyContractAddress'></span>
+        for
+        <span id='buyValue'></span>
+        ETH.
+        <br><br><hr><br>
+        <button disabled onclick="buy()" id="btn"> buy </button>
+    </div>
+
+    <div class='message'> 
+        Buy:
+        <br><br>
+        When you buy, the contract will hold your amount and the sellers amount until you recieve the item. When you recieve the item you must confirm.
+        This tells the contract to release the funds and complete the transaction.
+    </div>
+
+    <div class='popup'></div>
+
+</body>
+
+<script type="text/javascript" src='contract.js'></script>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/4.1.0/bignumber.min.js"></script>
+<script type="text/javascript">
+
+    // creates a dynamic contract
+    // https://leon-do.github.io/ETH-commerce/buy.html?val=0.4&addr=0xbe6714e8efea13ecf2a5b9bdbabe5fd67a98061b
+    var url = parseURL(window.location.href)
+    var contractAddress = url.searchObject.addr
+    var buyValue = url.searchObject.val
+    document.getElementById('buyContractAddress').innerHTML = contractAddress
+    document.getElementById('buyValue').innerHTML = buyValue
+
+    function buy() {
+
+        // get value of contract
+        web3.eth.contract(contractAbi).at(contractAddress).value.call({}, function (err, contractValue){
+           
+            var contractValue = new BigNumber(contractValue).toNumber()
+
+            // if buy value == contract value
+            // look at the contract to see why it's divide by 2
+            if (buyValue * 1000000000000000000 / 2 == contractValue){
+
+                // buy
+                web3.eth.contract(contractAbi).at(contractAddress).confirmPurchase(
+                    {
+                        from: web3.eth.accounts[0], 
+                        data: contractByteCode, 
+                        gas: '4700000',
+                        value: buyValue * 1000000000000000000
+                    }, function(err, transactionAddress){
+
+                    if (transactionAddress){
+                        var message = `
+                        your item has been purchased 
+                        <br><br> 
+                        https://rinkeby.etherscan.io/tx/${transactionAddress} 
+                        <br><br> 
+                        contact the seller to send the item
+                        <br><br>
+                        once you recieve your item, complete the transaction here:
+                        <br><br>
+                        https://leon-do.github.io/ETH-commerce/recieve.html?addr=${contractAddress}
+                        `
+                        document.getElementsByClassName('popup')[0].innerHTML = message
+                    }
+                })
+
+            } else {
+                alert('value does not match')
+            }
+        })
+        
+    }
+
+
+
+	window.addEventListener('load', function() {
+        // this function is in contract.js
+        loadWeb3()
+	})
+
+
+</script>
+
+</html>
