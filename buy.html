@@ -9,11 +9,11 @@
 <body>
 
     <div class='box'>
-        I agree to buy the item
-        <span id='buyContractAddress'></span>
-        for
-        <span id='buyValue'></span>
-        ETH.
+        I agree to buy this item: 
+        <br><br>
+        The contract address is: <input id='buyContractAddress'></input>
+        <br><br>
+        The amount of ETH is: <input type=number id='buyValue'></input>
         <br><br><hr><br>
         <button disabled onclick="buy()" id="btn"> buy </button>
     </div>
@@ -39,8 +39,11 @@
     var url = parseURL(window.location.href)
     var contractAddress = url.searchObject.addr
     var buyValue = url.searchObject.val
-    document.getElementById('buyContractAddress').innerHTML = contractAddress
-    document.getElementById('buyValue').innerHTML = buyValue
+    if (contractAddress !== undefined && buyValue !== undefined){
+        document.getElementById('buyContractAddress').value = contractAddress
+        document.getElementById('buyValue').value = buyValue
+    }
+
 
     function buy() {
 
