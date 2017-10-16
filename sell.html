@@ -44,7 +44,9 @@
         }, function (e, contract){
             
             var message1 = `
-            creating transaction. please wait...(don't close this page)
+            creating transaction... 
+            <br> 
+            please wait for contract address...
             <br><br>
             Check the status here: <br> https://rinkeby.etherscan.io/tx/${contract.transactionHash}
             <br><br> 
@@ -57,7 +59,7 @@
                 // display info on screen
                 var message2 = `Please send this link to the buyer: 
                 <br><br>  
-                https://leon-do.github.io/ETH-commerce/buy.html?val=${value}&addr=${contract.address}`
+                https://leon-do.github.io/ETH-commerce/buy.html?val=${2*value}&addr=${contract.address}`
                 document.getElementsByClassName('popup')[0].innerHTML = message2
             }
 

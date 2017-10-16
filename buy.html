@@ -13,7 +13,7 @@
         <br><br>
         The contract address is: <input id='buyContractAddress'></input>
         <br><br>
-        The amount of ETH is: <input type=number id='buyValue'></input>
+        The total amount of ETH is: <input type=number id='buyValue'></input>
         <br><br><hr><br>
         <button disabled onclick="buy()" id="btn"> buy </button>
     </div>
@@ -52,9 +52,8 @@
            
             var contractValue = new BigNumber(contractValue).toNumber()
 
-            // if buy value == contract value
-            // look at the contract to see why it's divide by 2
-            if (buyValue * 1000000000000000000 / 2 == contractValue){
+            // the buyer must put 2x amount. 1x for the item. 1x as collateral. collaterall will be returned
+            if (contractValue === buyValue * 1000000000000000000 * 2){
 
                 // buy
                 web3.eth.contract(contractAbi).at(contractAddress).confirmPurchase(
@@ -62,7 +61,7 @@
                         from: web3.eth.accounts[0], 
                         data: contractByteCode, 
                         gas: '4700000',
-                        value: buyValue * 1000000000000000000
+                        value: buyValue * 1000000000000000000 * 2
                     }, function(err, transactionAddress){
 
                     if (transactionAddress){

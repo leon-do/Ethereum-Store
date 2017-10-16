@@ -7,9 +7,7 @@
 
 <pre>
 pragma solidity ^0.4.11;
-
-// Source: <a href='https://solidity.readthedocs.io/en/develop/solidity-by-example.html#safe-remote-purchase'>https://solidity.readthedocs.io/en/develop/solidity-by-example.html#safe-remote-purchase</a>
-
+// This is a modification of: https://solidity.readthedocs.io/en/develop/solidity-by-example.html#safe-remote-purchase
 contract Purchase {
     uint public value;
     address public seller;
@@ -17,28 +15,13 @@ contract Purchase {
     enum State { Created, Locked, Inactive }
     State public state;
 
-    // returns the seller address
-    function getSellerAddress() returns (address){
-        return seller;
-    }
-
-    // returns the buyer address
-    function getBuyerAddress() returns (address){
-        return buyer;
-    }
-
-    // returns the amount of ETH in the contract
-    function getValue() returns (uint){
-        return value;
-    }
-
     // Ensure that `msg.value` is an even number.
     // Division will truncate if it is an odd number.
     // Check via multiplication that it wasn't an odd number.
     function Purchase() payable {
         seller = msg.sender;
-        value = msg.value / 2;
-        require((2 * value) == msg.value);
+        value = msg.value;
+        require(value) == msg.value);
     }
 
     modifier condition(bool _condition) {
