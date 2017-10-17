@@ -1,13 +1,8 @@
 https://ethereum-escrow.github.io/store/
 
 How does it work?
-![alt tag](./images/3_buy.png)
-![alt tag](./images/4_send.png)
-![alt tag](./images/5_recieve.png)
-![alt tag](./images/6_complete.png)
 
 -----------
-
 
 Both the buyer and seller agree to trade an item for 1 ETH.
 ![alt tag](./images/1_agree.png)
