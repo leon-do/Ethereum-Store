@@ -21,7 +21,6 @@ contract Purchase {
     function Purchase() payable {
         seller = msg.sender;
         value = msg.value;
-        require(value) == msg.value);
     }
 
     modifier condition(bool _condition) {
