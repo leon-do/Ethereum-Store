@@ -56,7 +56,7 @@
 		                data: contractByteCode, 
 		                gas: '4700000',
 		            }, function(err, transactionAddress){
-		           	var message = `The transaction will now return your funds. <br> Check at: <br> https://rinkeby.etherscan.io/tx/${transactionAddress} <br><br> contact the seller to send the item`
+		           	var message = `The transaction will now return your funds. <br> Check at: <br> https://rinkeby.etherscan.io/tx/${transactionAddress}`
 		            document.getElementsByClassName('popup')[0].innerHTML = message
 		        })
 	        } else {
