@@ -61,7 +61,7 @@
                         from: web3.eth.accounts[0], 
                         data: contractByteCode, 
                         gas: '4700000',
-                        value: buyValue * 1000000000000000000 * 2
+                        value: Number(buyValue) * 1000000000000000000
                     }, function(err, transactionAddress){
 
                     if (transactionAddress){
