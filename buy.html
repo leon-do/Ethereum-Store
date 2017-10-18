@@ -35,7 +35,7 @@
 <script type="text/javascript">
 
     // creates a dynamic contract
-    // https://leon-do.github.io/ETH-commerce/buy.html?val=0.4&addr=0xbe6714e8efea13ecf2a5b9bdbabe5fd67a98061b
+    // https://ethereum-escrow.github.io/ETH-commerce/buy.html?val=0.4&addr=0xbe6714e8efea13ecf2a5b9bdbabe5fd67a98061b
     var url = parseURL(window.location.href)
     var contractAddress = url.searchObject.addr
     var buyValue = url.searchObject.val
@@ -53,7 +53,7 @@
             var contractValue = new BigNumber(contractValue).toNumber()
 
             // the buyer must put 2x amount. 1x for the item. 1x as collateral. collaterall will be returned
-            if (contractValue === buyValue * 1000000000000000000 * 2){
+            if (contractValue * 2 === Number(buyValue) * 1000000000000000000){
 
                 // buy
                 web3.eth.contract(contractAbi).at(contractAddress).confirmPurchase(
@@ -74,7 +74,7 @@
                         <br><br>
                         once you recieve your item, complete the transaction here:
                         <br><br>
-                        https://leon-do.github.io/ETH-commerce/recieve.html?addr=${contractAddress}
+                        https://ethereum-escrow.github.io/ETH-commerce/recieve.html?addr=${contractAddress}
                         `
                         document.getElementsByClassName('popup')[0].innerHTML = message
                     }
