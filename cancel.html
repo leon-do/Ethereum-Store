@@ -38,7 +38,6 @@
         // get buyer address
         web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
         	
-        	console.log('buyerAddress:' buyerAddress)
         	// if the there is no buyer, then seller can cancel
 	        if (buyerAddress !== null && buyerAddress !== '0x0000000000000000000000000000000000000000'){
 	        	alert(`the contract cannot be canceled because a buyer has already purchased this item`)
