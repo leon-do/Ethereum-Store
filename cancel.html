@@ -9,65 +9,101 @@
 <body>
 
     <div class='box'>
-	    Transaction Number: 
-	    <br>
-	    <input id='cancelTransactionNumber'>
-        <br><br><hr><br>
-	    <button onclick="cancelSell()" id='btn'>cancel item</button>
+	    Below are the contracts you can cancel.
     </div>
 
-    <div class='message'> 
-        Cancel:
-        <br><br>
-        Canceling a contract will disable it forever!
-    </div>
+ 	<div class='contract'></div>
 
-    <div class='popup'></div>
+
 
 </body>
-<script type="text/javascript" src='common.js'></script>
-<script type="text/javascript" src='contract.js'></script>    
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript">
 
+    async function listContracts() {
+        var address = web3.eth.accounts[0]
+        var contracts = await getContractList(address)
+        for (var index in contracts){
+            var contractData = await getContractData(contracts[index])
+            if (contractData.length === 1 && Number(contractData[0].value) !== 0){
+                
+                var contractValue = contractData[0].value/1000000000000000000
+                var contractAddress = contracts[index]
+                $('.contract').append(`
 
-	function cancelSell() {
+                    <div id="${contractAddress}">
+                        I agree to cancel
+                        <br>
+                        contract: ${contractAddress}
+                        <br>
+                        and get back ${contractValue} ETH
+                        <br>
+                        <button onclick="cancelContract(${contractValue})"> cancel </button>
+                        <hr>
+                    </div>`
 
-        var contractAddress = document.getElementById('cancelTransactionNumber').value
-
-        // get buyer address
-        web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
-        	
-        	// if the there is no buyer, then seller can cancel
-	        if (buyerAddress !== null && buyerAddress !== '0x0000000000000000000000000000000000000000'){
-	        	alert(`the contract cannot be canceled because a buyer has already purchased this item`)
-	        	return
-	        }
-
-	        // get seller address
-			web3.eth.contract(contractAbi).at(contractAddress).seller.call({}, function (err, sellerAddress){
-		        
-		        // only the seller can cancel
-		        if (sellerAddress === web3.eth.accounts[0]){
-			        web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
-		            	var message = 'your transaction has been canceled. you will be refunded shortly'
-		        		document.getElementsByClassName('popup')[0].innerHTML = message
-		        	})	
-		        } else {
-	        		alert('incorrect address')
-		        }
-			
-			})  
-
-		})
-
+                )
+            }
+        }
     }
 
-	window.addEventListener('load', function() {
-        // this function is in contract.js		
-        loadWeb3()
+    function cancelContract(address){
+        web3.eth.contract(contractAbi).at(address).abort({}, function(err, data){
+        	var message = 'your transaction has been canceled. you will be refunded shortly'
+		    document.getElementsById(address).innerHTML = message
+    	})
+	}
 
-	})
+    function getContractData(address){
+        return new Promise (function(resolve){
+            $.get(`http://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+                var data = response.result
+                resolve(data)
+            })
+        })
+    }
+
+    function getContractList(address){
+        return new Promise (function(resolve){
+            $.get(`http://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+                var data = response.result
+                var contracts = []
+                for (var index in data){
+                    var contractAddress = data[index].contractAddress
+                    if (contractAddress !== ''){
+                        contracts.push(contractAddress)
+                    }
+                }
+                resolve(contracts)
+            })
+        })
+    }
+
+    window.addEventListener('load', function() {
+        web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+            case "1":
+                console.log('This is mainnet')
+                listContracts()
+                break
+            case "2":
+                console.log('This is the deprecated Morden test network.')
+                listContracts()
+                break
+            case "3":
+                console.log('This is the ropsten test network.')
+                listContracts()
+                break
+            case "4":
+                console.log('This is the rinkeby test network.')
+                listContracts()
+                break
+            default:
+                alert('Please connect to Metamask or Mist then try again')
+            }
+        })
+    })
 
 </script>
 
