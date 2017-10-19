@@ -57,7 +57,7 @@
 
     function getContractData(address){
         return new Promise (function(resolve){
-            $.get(`http://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+            $.get(`https://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
                 resolve(data)
             })
@@ -66,7 +66,7 @@
 
     function getContractList(address){
         return new Promise (function(resolve){
-            $.get(`http://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+            $.get(`https://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
                 var contracts = []
                 for (var index in data){
