@@ -55,7 +55,7 @@
     function cancelContract(address){
         web3.eth.contract(contractAbi).at(address).abort({}, function(err, data){
         	var message = 'your transaction has been canceled. you will be refunded shortly'
-		    document.getElementsById(address).innerHTML = message
+		    document.getElementById(address).innerHTML = message
     	})
 	}
 
@@ -89,23 +89,21 @@
             switch (netId) {
             case "1":
                 console.log('This is mainnet')
-                listContracts()
                 break
             case "2":
                 console.log('This is the deprecated Morden test network.')
-                listContracts()
                 break
             case "3":
                 console.log('This is the ropsten test network.')
-                listContracts()
                 break
             case "4":
                 console.log('This is the rinkeby test network.')
-                listContracts()
                 break
             default:
                 alert('Please connect to Metamask or Mist then try again')
+                return
             }
+            listContracts()
         })
     })
 
