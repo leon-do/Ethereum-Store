@@ -22,12 +22,13 @@
 <script type="text/javascript">
 
     async function listContracts() {
-        var address = web3.eth.accounts[0]
+        // var address = web3.eth.accounts[0]
+        var address = '0x1707dbdbbf8ba32dc11716acd7d99cf71c4712d9'
         var contracts = await getContractList(address)
 
         for (var index in contracts){
             var contractData = await getContractData(contracts[index])
-            if (contractData.length === 2 && Number(contractData[0].value) > 0){
+            if (contractData.length === 2 && Number(contractData[contractData.length-1].value) > 0){
                 var contractValue = contractData[0].value/1000000000000000000
                 var contractAddress = contracts[index]
                 $('.contract').append(`
@@ -76,28 +77,29 @@
         })
     }
 
-    window.addEventListener('load', function() {
-        web3.version.getNetwork((err, netId) => {
-            switch (netId) {
-            case "1":
-                console.log('This is mainnet')
-                break
-            case "2":
-                console.log('This is the deprecated Morden test network.')
-                break
-            case "3":
-                console.log('This is the ropsten test network.')
-                break
-            case "4":
-                console.log('This is the rinkeby test network.')
-                break
-            default:
-                alert('Please connect to Metamask or Mist then try again')
-                return
-            }
+    // window.addEventListener('load', function() {
+    //     web3.version.getNetwork((err, netId) => {
+    //         switch (netId) {
+    //         case "1":
+    //             console.log('This is mainnet')
+    //             break
+    //         case "2":
+    //             console.log('This is the deprecated Morden test network.')
+    //             break
+    //         case "3":
+    //             console.log('This is the ropsten test network.')
+    //             break
+    //         case "4":
+    //             console.log('This is the rinkeby test network.')
+    //             break
+    //         default:
+    //             alert('Please connect to Metamask or Mist then try again')
+    //             return
+    //         }
+    //         listContracts()
+    //     })
+    // })
             listContracts()
-        })
-    })
 
 </script>
 
