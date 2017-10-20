@@ -9,7 +9,7 @@
 <body>
 
 <div class='box'>
-	Please confirm that you recieved the items below...
+    Below are the contracts you can confirm:
 </div>
 
 <div class='contract'></div>
@@ -27,11 +27,6 @@
 
         for (var index in contracts){
             var contractData = await getContractData(contracts[index])
-
-            console.log(contracts[index])
-            console.log(contractData)
-            console.log(contractData.length)
-
             if (contractData.length === 2 && Number(contractData[0].value) > 0){
                 var contractValue = contractData[0].value/1000000000000000000
                 var contractAddress = contracts[index]
@@ -42,7 +37,7 @@
                         <br>
                         Contract: ${contractAddress}
                         <br>
-                        <button onclick="cancelContract('${contractAddress}')"> cancel </button>
+                        <button onclick="cancelContract('${contractAddress}')"> Recieved Item </button>
                         <hr>
                     </div>`
 
@@ -53,7 +48,7 @@
 
     function cancelContract(address){
         web3.eth.contract(contractAbi).at(address).confirmReceived({}, function(err, data){
-            var message = 'your transaction has been completed. you will be refunded shortly'
+            var message = `your transaction for ${address} has been completed. you will be refunded shortly`
             document.getElementById(address).innerHTML = message
         })
     }
@@ -71,7 +66,6 @@
         return new Promise (function(resolve){
             $.get(`https://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
-                console.log(data)
                 var contracts = []
                 for (var index in data){
                     var contractAddress = data[index].to
