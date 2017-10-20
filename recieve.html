@@ -22,8 +22,7 @@
 <script type="text/javascript">
 
     async function listContracts() {
-        // var address = web3.eth.accounts[0]
-        var address = '0x1707dbdbbf8ba32dc11716acd7d99cf71c4712d9'
+        var address = web3.eth.accounts[0]
         var contracts = await getContractList(address)
 
         for (var index in contracts){
