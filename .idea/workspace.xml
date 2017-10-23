@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a32bde5d-091e-472c-ba40-1b445da7bbd6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/recieve.html" afterPath="$PROJECT_DIR$/recieve.html" />
-    </list>
+    <list default="true" id="a32bde5d-091e-472c-ba40-1b445da7bbd6" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -25,25 +23,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="buy.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="buy.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/buy.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="378">
               <caret line="60" column="50" lean-forward="true" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="50" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="recieve.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/recieve.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="100" column="0" lean-forward="true" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-              <folding>
-                <marker date="1508475385000" expanded="true" signature="1185:1491" ph="..." />
-                <marker date="1508475385000" expanded="true" signature="2779:3523" ph="//..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -174,7 +159,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6615000" />
+    <option name="totallyTimeSpent" value="6764000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -375,22 +360,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/recieve.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="98" column="11" lean-forward="true" selection-start-line="98" selection-start-column="11" selection-end-line="98" selection-end-column="11" />
+          <folding>
+            <marker date="1508475385000" expanded="true" signature="1185:1491" ph="..." />
+            <marker date="1508475385000" expanded="true" signature="2779:3523" ph="//..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/buy.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="60" column="50" lean-forward="true" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="50" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/recieve.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="100" column="0" lean-forward="true" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-          <folding>
-            <marker date="1508475385000" expanded="true" signature="1185:1491" ph="..." />
-            <marker date="1508475385000" expanded="true" signature="2779:3523" ph="//..." />
-          </folding>
         </state>
       </provider>
     </entry>
