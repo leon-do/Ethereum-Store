@@ -15,7 +15,7 @@
         <br><br>
         The total amount of ETH is: <input type=number id='buyValue'></input>
         <br><br><hr><br>
-        <button disabled onclick="buy()" id="btn"> buy </button>
+        <button onclick="buy()" id="btn"> buy </button>
     </div>
 
     <div class='message'> 
@@ -28,7 +28,6 @@
     <div class='popup'></div>
 
 </body>
-<script type="text/javascript" src='common.js'></script>
 <script type="text/javascript" src='contract.js'></script>
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/4.1.0/bignumber.min.js"></script>
@@ -87,7 +86,29 @@
         
     }
 
-
+    function parseURL(url) {
+        var parser = document.createElement('a'),
+            searchObject = {},
+            queries, split, i;
+        // Let the stack overflow do the work
+        parser.href = url;
+        // Convert query string to object
+        queries = parser.search.replace(/^\?/, '').split('&');
+        for( i = 0; i < queries.length; i++ ) {
+            split = queries[i].split('=');
+            searchObject[split[0]] = split[1];
+        }
+        return {
+            protocol: parser.protocol,
+            host: parser.host,
+            hostname: parser.hostname,
+            port: parser.port,
+            pathname: parser.pathname,
+            search: parser.search,
+            searchObject: searchObject,
+            hash: parser.hash
+        };
+    }
 
 	window.addEventListener('load', function() {
         // this function is in contract.js
