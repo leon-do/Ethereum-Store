@@ -29,7 +29,6 @@
 
 </body>
 <script type="text/javascript" src='contract.js'></script>
-<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/4.1.0/bignumber.min.js"></script>
 <script type="text/javascript">
 
@@ -63,7 +62,6 @@
                         value: Number(buyValue) * 1000000000000000000
                     }, function(err, transactionAddress){
 
-                    if (transactionAddress){
                         var message = `
                         your item has been purchased 
                         <br><br> 
@@ -76,7 +74,7 @@
                         https://ethereum-escrow.github.io/store/recieve.html
                         `
                         document.getElementsByClassName('popup')[0].innerHTML = message
-                    }
+                    
                 })
 
             } else {
