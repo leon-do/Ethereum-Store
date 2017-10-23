@@ -57,9 +57,15 @@
 
             if (typeof contract.address !== 'undefined') {
                 // display info on screen
-                var message2 = `Please send this link to the buyer: 
+                var message2 = `
+                Please send this link to the buyer: 
                 <br><br>  
-                https://ethereum-escrow.github.io/store/buy.html?val=${2*value}&addr=${contract.address}`
+                https://ethereum-escrow.github.io/store/buy.html?val=${2*value}&addr=${contract.address}
+                <br><br><hr><br>
+                To cancel, go here:
+                <br><br>
+                https://ethereum-escrow.github.io/store/cancel.html
+                `
                 document.getElementsByClassName('popup')[0].innerHTML = message2
             }
 

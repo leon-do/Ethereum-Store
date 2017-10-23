@@ -47,7 +47,12 @@
 
     function cancelContract(address){
         web3.eth.contract(contractAbi).at(address).confirmReceived({}, function(err, data){
-            var message = `your transaction for ${address} has been completed. you will be refunded shortly`
+            var message = `
+            your transaction: 
+            <br>
+            ${address} has been completed. 
+            <br>
+            You will be refunded shortly`
             document.getElementById(address).innerHTML = message
         })
     }
