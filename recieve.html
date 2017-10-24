@@ -26,7 +26,7 @@
     async function listContracts() {
         var address = web3.eth.accounts[0]
         var contracts = await getContractList(address)
-
+        console.log('contracts', contracts)
         for (var index in contracts){
             var contractData = await getContractData(contracts[index])
             if (contractData.length === 2 && Number(contractData[contractData.length-1].value) > 0){
@@ -61,6 +61,7 @@
     }
 
     function getContractData(address){
+        console.log(`${etherscanLink}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`)
         return new Promise (function(resolve){
             $.get(`${etherscanLink}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
