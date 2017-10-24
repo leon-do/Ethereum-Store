@@ -48,6 +48,10 @@
 
     function buy() {
 
+        // get value
+        contractAddress = document.getElementById('buyContractAddress').value
+        buyValue = document.getElementById('buyValue').value
+
         // get value of contract
         web3.eth.contract(contractAbi).at(contractAddress).value.call({}, function (err, contractValue){
            
