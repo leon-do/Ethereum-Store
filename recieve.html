@@ -26,7 +26,6 @@
     async function listContracts() {
         var address = web3.eth.accounts[0]
         var contracts = await getContractList(address)
-        console.log('contracts', contracts)
         for (var index in contracts){
             var contractData = await getContractData(contracts[index])
             if (contractData.length === 2 && Number(contractData[contractData.length-1].value) > 0){
@@ -61,7 +60,6 @@
     }
 
     function getContractData(address){
-        console.log(`${etherscanLink}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`)
         return new Promise (function(resolve){
             $.get(`${etherscanLink}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
@@ -87,20 +85,23 @@
     web3.version.getNetwork((err, netId) => {
         switch (netId) {
         case "1":
-            console.log('This is mainnet')
             etherscanLink =  'https://etherscan.io/'
+            listContracts()
             break
         case "2":
             console.log('This is the deprecated Morden test network.')
             etherscanLink =  'https://morden.etherscan.io/'
+            listContracts()
             break
         case "3":
             console.log('This is the ropsten test network.')
             etherscanLink =  'https://ropsten.etherscan.io/'
+            listContracts()
             break
         case "4":
             console.log('This is the rinkeby test network.')
             etherscanLink = 'https://rinkeby.etherscan.io/'
+            listContracts()
             break
         default:
             alert('Please connect to Metamask or Mist then try again')
