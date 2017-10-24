@@ -48,37 +48,43 @@
             gas: '4700000',
             value: value * 1000000000000000000
         }, function (e, contract){
-            
-            var message1 = `
-            creating transaction... 
-            <br> 
-            please wait for contract address...
-            <br><br>
-            Check the status here:
-            <br>
-            ${etherscanLink}tx/${contract.transactionHash}
-            <br><br>
-            <div class="lds-spinner" style="100%;height:100%"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-            (if anyone can center this loading animation, that'll be great...)
-            `
-            document.getElementsByClassName('popup')[0].innerHTML = message1
 
-            console.log('contract', contract)
-            if (typeof contract.address == 'undefined') {
+            // e.g. check tx hash on the first call (transaction send)
+            if(!contract.address) {
+                console.log('contract', contract) // The hash of the transaction, which deploys the contract
+                var message1 = `
+                    creating transaction...
+                    <br>
+                    please wait for contract address...
+                    <br><br>
+                    Check the status here:
+                    <br>
+                    ${etherscanLink}tx/${contract.transactionHash}
+                    <br><br>
+                    <div class="lds-spinner" style="100%;height:100%"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+                    (if anyone can center this loading animation, that'll be great...)
+                    `
+                document.getElementsByClassName('popup')[0].innerHTML = message1
+            // check address on the second call (contract deployed)
+            } else {
                 console.log('contract', contract)
-                // display info on screen
-                var message2 = `
-                Please send this link to the buyer: 
-                <br><br>  
-                https://ethereum-escrow.github.io/store/buy.html?val=${2*value}&addr=${contract.address}
-                <br><br><hr><br>
-                To cancel, go here:
-                <br><br>
-                https://ethereum-escrow.github.io/store/cancel.html
-                `
-                document.getElementsByClassName('popup')[0].innerHTML = message2
-            }
+                if (typeof contract.address == 'undefined') {
+                    console.log('contract', contract)
+                    // display info on screen
+                    var message2 = `
+                        Please send this link to the buyer:
+                        <br><br>
+                        https://ethereum-escrow.github.io/store/buy.html?val=${2*value}&addr=${contract.address}
+                        <br><br><hr><br>
+                        To cancel, go here:
+                        <br><br>
+                        https://ethereum-escrow.github.io/store/cancel.html
+                        `
+                    document.getElementsByClassName('popup')[0].innerHTML = message2
+                }
 
+
+            }
         })
 
     }
