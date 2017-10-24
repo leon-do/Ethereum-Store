@@ -64,7 +64,7 @@
             document.getElementsByClassName('popup')[0].innerHTML = message1
 
             console.log('contract', contract)
-            while (typeof contract.address == 'undefined') {
+            if (typeof contract.address == 'undefined') {
                 console.log('contract', contract)
                 // display info on screen
                 var message2 = `
