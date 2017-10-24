@@ -11,7 +11,7 @@ function loadWeb3() {
 
         // enable button
         document.getElementById('btn').disabled = false
-        
+
         web3.version.getNetwork((err, netId) => {
         switch (netId) {
             case "1":
@@ -25,7 +25,7 @@ function loadWeb3() {
                 break
             case "4":
                 console.log('This is the rinkeby test network.')
-                break        
+                break
             default:
                 alert('Please connect to Metamask or Mist then try again')
             }
