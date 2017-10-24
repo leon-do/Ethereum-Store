@@ -68,8 +68,6 @@
             // check address on the second call (contract deployed)
             } else {
                 console.log('contract', contract)
-                if (typeof contract.address == 'undefined') {
-                    console.log('contract', contract)
                     // display info on screen
                     var message2 = `
                         Please send this link to the buyer:
@@ -81,10 +79,8 @@
                         https://ethereum-escrow.github.io/store/cancel.html
                         `
                     document.getElementsByClassName('popup')[0].innerHTML = message2
-                }
-
-
             }
+
         })
 
     }
