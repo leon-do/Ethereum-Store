@@ -14,8 +14,11 @@
         The contract address is: <input id='buyContractAddress'></input>
         <br><br>
         The total amount of ETH is: <input type=number id='buyValue'></input>
-        <br><br><hr><br>
+        <br><br>
         <button onclick="buy()" id="btn"> buy </button>
+        <br><br><hr><br>
+        <!-- id sell displays the  message after a seller creates a contract-->
+        <div id='buy'></div>
     </div>
 
     <div id='recieve'></div>
@@ -31,6 +34,8 @@
     let etherscanLink
     window.addEventListener('load', async function() {
         etherscanLink = await getEtherscanLink()
+        getBuyValue ()
+        getContractValue()
         listContracts()
     })
 
@@ -51,14 +56,15 @@
                 gas: '4700000',
                 value: Number(buyValue) * 1000000000000000000
             }, function(err, transactionAddress) {
+                if (err){return}
                 displayMessage(transactionAddress)
             })
     }
 
     function displayMessage (transactionAddress) {
-        document.getElementsByClassName('popup')[0].innerHTML =
+        document.getElementById('buy').innerHTML =
             `
-            your item has been purchased
+            your item has been purchased!
             <br><br>
             ${etherscanLink}tx/${transactionAddress}
             <br><br>
@@ -73,10 +79,11 @@
     function getBuyValue () {
         const url = parseURL(window.location.href)
         let buyValue = url.searchObject.val
-        if (buyValue !== undefined){
-            document.getElementById('buyContractAddress').value = buyValue
+        // if the link does not have "...buy.html?val=0.08..."
+        if (buyValue === undefined){
+            buyValue = document.getElementById('buyValue').value
         } else {
-            buyValue = document.getElementById('buyContractAddress').value
+            document.getElementById('buyValue').value = buyValue
         }
         return buyValue
     }
@@ -158,7 +165,6 @@
     }
 
 
-
     async function listContracts() {
         var address = web3.eth.accounts[0]
         var contracts = await getContractList(address)
@@ -178,9 +184,9 @@
             <div class="message" id="${contractAddress}">
                 I recieved
                 <br>
-                Contract: ${contractAddress}
+                Contract address: ${contractAddress}
                 <br>
-                <button onclick="recieve('${contractAddress}')"> Recieved Item </button>
+                <button onclick="recieve('${contractAddress}')"> Item Recieved </button>
             </div>
             `
         document.getElementById('recieve').innerHTML = oldListing + newListing
