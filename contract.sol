@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-
-<pre>
 pragma solidity ^0.4.11;
+
 // This is a modification of: https://solidity.readthedocs.io/en/develop/solidity-by-example.html#safe-remote-purchase
+
 contract Purchase {
     uint public value;
     address public seller;
@@ -92,9 +86,3 @@ contract Purchase {
         seller.transfer(this.balance);
     }
 }
-
-</pre>
-
-
-</body>
-</html>
