@@ -54,9 +54,9 @@
         let oldListing = document.getElementById('cancel').innerHTML
         let newListing = `
 			<div class='message' id="${contractAddress}">
-			    Your contract address: ${contractAddress}
+			    Your item ${contractAddress}
 			    <br>
-			    Value in ETH: ${contractValue}
+			    is worth: ${contractValue} ETH.
 				<br><br>
 				Link for buyer:
 				<br>
@@ -64,7 +64,7 @@
 				<br><br>
 				or
 				<br><br>
-				<button onclick="cancel('${contractAddress}')"> cancel this transaction </button>
+				<button onclick="cancel('${contractAddress}')"> cancel this item </button>
 			</div>
 			`
         document.getElementById('cancel').innerHTML = oldListing + newListing
@@ -73,7 +73,7 @@
     function cancel(address){
         web3.eth.contract(contractAbi).at(address).abort({}, function(err, data){
             if (err){return}
-            document.getElementById(address).innerHTML = 'your transaction has been canceled. you will be refunded shortly'
+            document.getElementById(address).innerHTML = 'your item has been canceled. you will be refunded shortly'
         })
     }
 
@@ -109,19 +109,6 @@
             When the confirmation is complete, refresh this page.
             <br>
             Your item will be listed below.
-            `
-    }
-
-    function displaySellMessage2(contract, value){
-        document.getElementById('sell').innerHTML =
-            `
-            Please send this link to the buyer:
-            <br><br>
-            https://ethereum-escrow.github.io/store/buy.html?val=${2*value}&addr=${contract.address}
-            <br><br><hr><br>
-            To cancel, go here:
-            <br><br>
-            https://ethereum-escrow.github.io/store/cancel.html
             `
     }
 
