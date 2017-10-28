@@ -15,7 +15,8 @@ a {
     padding: 3%;
 }
 .click:hover {
-    background-color: black;
+    background-color: #212121;
+    border: 3px solid #212121;
     color: #EFEDE3;
 }
 .message {
