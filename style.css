@@ -1,26 +1,33 @@
-body {
-    font-family: 'Inconsolata', monospace;
-    background-color: #EFEDE3;
-    text-align: center;
-}
 a {
     font-size: 99%;
     text-decoration: none;
     color: black;
 }
+body {
+    font-family: 'Inconsolata', monospace;
+    background-color: #EFEDE3;
+}
 .box {
-    text-transform: uppercase;
     border: 3px solid black;
     margin: 3%;
     padding: 3%;
+}
+.center {
+    text-align: center;
 }
 .click:hover {
     background-color: #212121;
     border: 3px solid #212121;
     color: #EFEDE3;
 }
+.instructionImages {
+    width: 75%;
+}
 .message {
     border: 0.3px solid black;
     margin: 3%;
     padding: 3%;
+}
+.uppercase {
+    text-transform: uppercase;
 }

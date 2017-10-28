@@ -2,13 +2,10 @@
 <html>
 <head>
 	<title></title>
-    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-
 <body>
-
-    <div class='box'>
+    <div class='box center'>
         I agree to buy an item:.
         <br><br>
         The contract address is: <input id='buyContractAddress'></input>
@@ -20,9 +17,8 @@
         <!-- id sell displays the  message after a seller creates a contract-->
         <div id='buy'></div>
     </div>
-
+    <!-- this is used to display previously bought items-->
     <div id='recieve'></div>
-
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/4.1.0/bignumber.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -140,6 +136,7 @@
     })
     }
 
+    // A black magic spell I copied from stack overflow
     function parseURL(url) {
         var parser = document.createElement('a'),
             searchObject = {},
@@ -164,11 +161,13 @@
         };
     }
 
+    // displays eligble contracts
     async function listContracts() {
         var address = web3.eth.accounts[0]
         var contracts = await getContractList(address)
         for (var index in contracts){
             var contractData = await getContractData(contracts[index])
+            // contract must have 2 transactions and is worth > 0 ETH
             if (contractData.length === 2 && Number(contractData[contractData.length-1].value) > 0){
                 var contractValue = contractData[0].value/1000000000000000000
                 var contractAddress = contracts[index]
