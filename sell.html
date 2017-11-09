@@ -6,18 +6,18 @@
 </head>
 <body>
 
-    <div class='box center'>
+    <div class='border center'>
         I agree to sell an item.
         <br>
         The amount of eth is:
         <input type='number' id='sellPrice'>
         <br><br>
-        <button onclick="sell()" id='btn'>sell</button>
+        <button onclick="sell()">sell</button>
         <br><br><hr><br>
         <!-- id sell displays the  message after a seller creates a contract-->
         <div id='sell'></div>
     </div>
-
+    <br><br>
     <!-- listing displays lists historical items-->
     <div id="cancel"></div>
 
@@ -51,7 +51,7 @@
     function displayCancelMessage(contractAddress, contractValue){
         let oldListing = document.getElementById('cancel').innerHTML
         let newListing = `
-			<div class='message' id="${contractAddress}">
+			<div class='border' id="${contractAddress}">
 			    Your Item:
 			    <br>
                 ${etherscanLink}address/${contractAddress}
@@ -87,7 +87,6 @@
             {
                 from: web3.eth.accounts[0],
                 data: contractByteCode,
-                gas: '4700000',
                 value: value * 1000000000000000000
             }, function (e, contract){
                 // check tx hash on the first call (transaction send)
@@ -102,7 +101,7 @@
     function displaySellMessage1(contract){
         document.getElementById('sell').innerHTML =
             `
-            creating transaction...
+            Creating transaction...
             <br><br>
             Check the status here:
             <br>

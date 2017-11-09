@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class='box center'>
+    <div class='border center'>
         I agree to buy an item:.
         <br><br>
         The contract address is: <input id='buyContractAddress'></input>
@@ -72,6 +72,7 @@
             `
     }
 
+    // parse url to get value
     function getBuyValue () {
         const url = parseURL(window.location.href)
         let buyValue = url.searchObject.val
@@ -84,6 +85,7 @@
         return buyValue
     }
 
+    // parse url to get contract address
     function getContractAddress () {
         const url = parseURL(window.location.href)
         let contractAddress = url.searchObject.addr
