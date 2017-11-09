@@ -91,9 +91,7 @@
             }, function (e, contract){
                 // check tx hash on the first call (transaction send)
                 if(!contract.address) {
-                    console.log('b4', contract)
                     displaySellMessage1(contract)
-                    // The hash of the transaction, which deploys the contract
                 }
             })
     }
@@ -149,7 +147,7 @@
             switch (netId) {
             case "1":
                 console.log('This is mainnet')
-                resolve('https://etherscan.io/')
+                resolve('https://api.etherscan.io/')
                 break
             case "2":
                 console.log('This is the deprecated Morden test network.')
