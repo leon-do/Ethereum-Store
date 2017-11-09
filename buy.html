@@ -49,7 +49,6 @@
             {
                 from: web3.eth.accounts[0],
                 data: contractByteCode,
-                gas: '4700000',
                 value: Number(buyValue) * 1000000000000000000
             }, function(err, transactionAddress) {
                 if (err){return}
@@ -62,7 +61,7 @@
             `
             your item has been purchased!
             <br><br>
-            ${etherscanLink}tx/${transactionAddress}
+            ${etherscanLink.link}tx/${transactionAddress}
             <br><br>
             contact the seller to send the item
             <br><br>
@@ -110,32 +109,32 @@
         return new Promise(resolve => {
             // Checking if Web3 has been injected by the browser (Mist/MetaMask)
             if (typeof web3 === 'undefined') {
-            alert('Please connect to Metamask or Mist then try again')
-            return
-        }
-        web3.version.getNetwork((err, netId) => {
-            switch (netId) {
-            case "1":
-                console.log('This is mainnet')
-                resolve('https://api.etherscan.io/')
-                break
-            case "2":
-                console.log('This is the deprecated Morden test network.')
-                resolve('https://morden.etherscan.io/')
-                break
-            case "3":
-                console.log('This is the ropsten test network.')
-                resolve('https://ropsten.etherscan.io/')
-                break
-            case "4":
-                console.log('This is the rinkeby test network.')
-                resolve('https://rinkeby.etherscan.io/')
-                break
-            default:
                 alert('Please connect to Metamask or Mist then try again')
+                return
             }
+            web3.version.getNetwork((err, netId) => {
+                switch (netId) {
+                case "1":
+                    console.log('This is mainnet')
+                    resolve({api: 'https://api.etherscan.io/', link: 'https://etherscan.io/'})
+                    break
+                case "2":
+                    console.log('This is the deprecated Morden test network.')
+                    resolve({api: 'https://morden.etherscan.io/', link: 'https://morden.etherscan.io/'})
+                    break
+                case "3":
+                    console.log('This is the ropsten test network.')
+                    resolve({api: 'https://ropsten.etherscan.io/', link: 'https://ropsten.etherscan.io/'})
+                    break
+                case "4":
+                    console.log('This is the rinkeby test network.')
+                    resolve({api: 'https://rinkeby.etherscan.io/', link: 'https://rinkeby.etherscan.io/'})
+                    break
+                default:
+                    alert('Please connect to Metamask or Mist then try again')
+                }
+            })
         })
-    })
     }
 
     // A black magic spell I copied from stack overflow
@@ -181,7 +180,8 @@
     function displayRecieveMessage(contractAddress){
         let oldListing = document.getElementById('recieve').innerHTML
         let newListing = `
-            <div class="message" id="${contractAddress}">
+            <br>
+            <div class="border" id="${contractAddress}">
                 I recieved
                 <br>
                 Contract address: ${contractAddress}
@@ -208,7 +208,7 @@
 
     function getContractData(address){
         return new Promise (function(resolve){
-            $.get(`${etherscanLink}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+            $.get(`${etherscanLink.api}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
                 resolve(data)
             })
@@ -217,7 +217,7 @@
 
     function getContractList(address){
         return new Promise (function(resolve){
-            $.get(`${etherscanLink}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+            $.get(`${etherscanLink.api}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
                 var contracts = []
                 for (var index in data){
