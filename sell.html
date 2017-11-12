@@ -6,18 +6,18 @@
 </head>
 <body>
 
-    <div class='box center'>
+    <div class='border center'>
         I agree to sell an item.
         <br>
         The amount of eth is:
         <input type='number' id='sellPrice'>
         <br><br>
-        <button onclick="sell()" id='btn'>sell</button>
+        <button onclick="sell()">sell</button>
         <br><br><hr><br>
         <!-- id sell displays the  message after a seller creates a contract-->
         <div id='sell'></div>
     </div>
-
+    <br><br>
     <!-- listing displays lists historical items-->
     <div id="cancel"></div>
 
@@ -51,10 +51,11 @@
     function displayCancelMessage(contractAddress, contractValue){
         let oldListing = document.getElementById('cancel').innerHTML
         let newListing = `
-			<div class='message' id="${contractAddress}">
+            <br>
+			<div class='border' id="${contractAddress}">
 			    Your Item:
 			    <br>
-                ${etherscanLink}address/${contractAddress}
+                ${etherscanLink.link}address/${contractAddress}
 			    <br><br>
 			    Value of the Item:
                 <br>
@@ -87,14 +88,11 @@
             {
                 from: web3.eth.accounts[0],
                 data: contractByteCode,
-                gas: '4700000',
                 value: value * 1000000000000000000
             }, function (e, contract){
                 // check tx hash on the first call (transaction send)
                 if(!contract.address) {
-                    console.log('b4', contract)
                     displaySellMessage1(contract)
-                    // The hash of the transaction, which deploys the contract
                 }
             })
     }
@@ -102,11 +100,11 @@
     function displaySellMessage1(contract){
         document.getElementById('sell').innerHTML =
             `
-            creating transaction...
+            Creating transaction...
             <br><br>
             Check the status here:
             <br>
-            ${etherscanLink}tx/${contract.transactionHash}
+            ${etherscanLink.link}tx/${contract.transactionHash}
             <br><br>
             When the confirmation is complete, refresh this page.
             <br>
@@ -116,7 +114,7 @@
 
     function getContractData(address){
         return new Promise (function(resolve){
-            $.get(`${etherscanLink}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+            $.get(`${etherscanLink.api}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
                 resolve(data)
             })
@@ -125,7 +123,7 @@
 
     function getContractList(address){
         return new Promise (function(resolve){
-            $.get(`${etherscanLink}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+            $.get(`${etherscanLink.api}api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
                 var data = response.result
                 var contracts = []
                 for (var index in data){
@@ -150,19 +148,19 @@
             switch (netId) {
             case "1":
                 console.log('This is mainnet')
-                resolve('https://etherscan.io/')
+                resolve({api: 'https://api.etherscan.io/', link: 'https://etherscan.io/'})
                 break
             case "2":
                 console.log('This is the deprecated Morden test network.')
-                resolve('https://morden.etherscan.io/')
+                resolve({api: 'https://morden.etherscan.io/', link: 'https://morden.etherscan.io/'})
                 break
             case "3":
                 console.log('This is the ropsten test network.')
-                resolve('https://ropsten.etherscan.io/')
+                resolve({api: 'https://ropsten.etherscan.io/', link: 'https://ropsten.etherscan.io/'})
                 break
             case "4":
                 console.log('This is the rinkeby test network.')
-                resolve('https://rinkeby.etherscan.io/')
+                resolve({api: 'https://rinkeby.etherscan.io/', link: 'https://rinkeby.etherscan.io/'})
                 break
             default:
                 alert('Please connect to Metamask or Mist then try again')

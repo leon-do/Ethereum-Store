@@ -4,29 +4,30 @@ a {
     color: black;
 }
 body {
+    padding-left: 6%;
+    padding-right: 6%;
     font-family: 'Inconsolata', monospace;
     background-color: #EFEDE3;
 }
-.box {
-    border: 3px solid black;
-    margin: 3%;
+.border {
+    border: 0.3px solid black;
     padding: 3%;
+}
+.btn {
+    border: 3px solid black;
+    padding: 1%;
+}
+.btn:hover {
+    background-color: #212121;
+    border: 3px solid #212121;
+    color: #EFEDE3;
+    cursor:pointer;
 }
 .center {
     text-align: center;
 }
-.click:hover {
-    background-color: #212121;
-    border: 3px solid #212121;
-    color: #EFEDE3;
-}
 .instructionImages {
     width: 75%;
-}
-.message {
-    border: 0.3px solid black;
-    margin: 3%;
-    padding: 3%;
 }
 .uppercase {
     text-transform: uppercase;
